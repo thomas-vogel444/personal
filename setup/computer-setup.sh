@@ -23,3 +23,4 @@ brew cask install slack
 brew cask install alfred
 brew cask install iterm2
 brew cask install authy
+brew install sbt
