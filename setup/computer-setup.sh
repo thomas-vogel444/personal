@@ -25,3 +25,7 @@ brew cask install iterm2
 brew cask install authy
 brew install sbt
 brew install tfenv
+
+# Installing gcloud 
+curl https://sdk.cloud.google.com > install.sh
+bash install.sh --disable-prompts
