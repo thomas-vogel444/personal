@@ -15,3 +15,7 @@ output "kubectl" {
     "external_ip": module.kubectl_instance.external_ip
   }
 }
+
+output "master_plane_endpoint" {
+  value = module.kubernetes_cluster.master_internal_ip
+}

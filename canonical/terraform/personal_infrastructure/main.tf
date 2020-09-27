@@ -4,7 +4,7 @@ provider "google" {
 }
 
 module "networking" {
-  source = "../../modules/gcp/networking"
+  source = "..\/modules\/gcp\/networking"
 
   network_name = var.network_name
   public_cidr = var.public_subnet_cidr
@@ -14,26 +14,27 @@ module "networking" {
 
 module "bastion_host" {
   depends_on = [module.networking]
-  source = "../../modules/gcp/instances"
+  source = "..\/modules\/gcp\/instances"
 
   instance_name = "bastion"
   machine_type = "e2-micro"
   instance_zone = "europe-west2-b"
   subnet_name = module.networking.public_subnet_name
   public_ip = module.networking.bastion_external_ip
+  service_account_email = module.kubectl_service_account.email
 
   network_tags = ["ssh-ingress", "ssh-egress"]
 }
 
 module "kubectl_service_account" {
-  source = "../../modules/gcp/iam"
+  source = "..\/modules\/gcp\/iam"
   service_account_name = "kubectl"
   role = "roles/container.developer"
 }
 
 module "kubectl_instance" {
   depends_on = [module.networking, module.kubectl_service_account]
-  source = "../../modules/gcp/instances"
+  source = "..\/modules\/gcp\/instances"
 
   instance_name = "kubectl"
   machine_type = "e2-micro"
@@ -47,7 +48,7 @@ module "kubectl_instance" {
 
 module "kubernetes_cluster" {
   depends_on = [module.networking]
-  source = "../../modules/gcp/gke"
+  source = "..\/modules\/gcp\/gke"
 
   region = var.region
   network = var.network_name
