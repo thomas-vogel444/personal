@@ -5,8 +5,8 @@ resource "google_container_cluster" "kubernetes_cluster" {
   network = var.network
   subnetwork = var.subnet
 
-//  Networking
-//  networking_mode = "VPC_NATIVE"
+  //  Networking
+  //  networking_mode = "VPC_NATIVE"
 
   master_authorized_networks_config {}
 
@@ -38,31 +38,3 @@ resource "google_container_node_pool" "toms_node_pool" {
     tags = var.network_tags
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
