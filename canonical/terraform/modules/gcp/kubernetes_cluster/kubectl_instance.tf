@@ -31,10 +31,16 @@ resource "google_compute_instance" "kubectl" {
     email = google_service_account.member.email
   }
 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install kubectl"
+  metadata_startup_script = <<EOF
+sudo apt-get update
+sudo apt-get install kubectl
+gcloud container clusters get-credentials personal --region europe-west2
+alias k='kubectl'
+EOF
+
   allow_stopping_for_update = true
 
-  tags = ["ssh-ingress"]
+  tags = ["ssh-ingress", "http-https-ingress", "http-https-egress"]
 
   //  scheduling {
   //    preemptible = true

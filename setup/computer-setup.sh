@@ -18,6 +18,7 @@ brew cask install 1password
 brew cask install brave-browser
 brew cask install docker
 brew install minikube
+brew install docker-compose
 brew cask install evernote
 brew cask install slack
 brew cask install alfred
@@ -25,6 +26,7 @@ brew cask install iterm2
 brew cask install authy
 brew install sbt
 brew install tfenv
+brew cask install chromedriver
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh

@@ -22,5 +22,5 @@ module "kubernetes_cluster" {
   master_cidr = var.k8s_master_cidr
   pod_cidr = var.k8s_pod_cidr
   service_cidr = var.k8s_service_cidr
-  network_tags = []
+  network_tags = ["http-https-ingress", "http-https-egress"]
 }

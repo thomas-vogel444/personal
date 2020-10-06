@@ -25,5 +25,5 @@ resource "google_compute_instance" "instance" {
 
   allow_stopping_for_update = true
 
-  tags = ["ssh-bastion-ingress"]
+  tags = ["ssh-egress"]
 }
