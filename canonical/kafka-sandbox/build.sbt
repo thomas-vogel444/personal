@@ -10,10 +10,13 @@ lazy val root = (project in file("."))
   .settings(
     name := "kafka-sandbox",
     libraryDependencies ++= Seq(
+      "com.typesafe" % "config" % "1.4.0",
       "org.apache.kafka" % "kafka-clients" % "5.5.1-ccs",
       "io.circe" %% "circe-core" % "0.12.3",
       "io.circe" %% "circe-generic" % "0.12.3",
       "io.circe" %% "circe-parser" % "0.12.3",
+      "ch.qos.logback" % "logback-classic" % "1.2.3",
+      "org.slf4j" % "log4j-over-slf4j" % "1.7.25",
       scalaTest % Test
     )
   )

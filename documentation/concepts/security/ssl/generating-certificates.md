@@ -1,4 +1,4 @@
-# Client Side Certificates
+# Generating Certificates
 
 From https://www.makethenmakeinstall.com/2014/05/ssl-client-authentication-step-by-step/
 

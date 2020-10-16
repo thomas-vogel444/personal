@@ -3,19 +3,21 @@ package kafkaexample
 import java.time.Duration
 import java.util.Collections
 
-import kafkaexample.consumer.Consumer
+import kafkaexample.consumer.PersonConsumer
 import kafkaexample.domain.Person
-import kafkaexample.producer.Producer.TOPIC
 import org.apache.kafka.clients.consumer.ConsumerRecords
 
 import scala.jdk.CollectionConverters.IterableHasAsScala
 
 object ConsumerMain extends App {
 
-  Consumer.consumer.subscribe(Collections.singleton(TOPIC))
+  val TOPIC = "test-topic"
+  val consumer = new PersonConsumer(KafkaConfig.kafkaClientConfig).consumer
+
+  consumer.subscribe(Collections.singleton(TOPIC))
 
   while (true) {
-    val consumerRecords: ConsumerRecords[String, Person] = Consumer.consumer.poll(Duration.ofSeconds(1))
+    val consumerRecords: ConsumerRecords[String, Person] = consumer.poll(Duration.ofSeconds(1))
 
     consumerRecords.records(TOPIC).asScala.toList
       .foreach(record => println(s"key: ${record.key}, value: ${record.value}"))
