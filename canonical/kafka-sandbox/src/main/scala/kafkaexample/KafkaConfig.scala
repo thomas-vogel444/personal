@@ -11,8 +11,7 @@ case class SslStore(location: String, password: String)
 case class KafkaClientSettings(
   bootStrapServers: String,
   sslTrustStore: SslStore,
-  sslKeyStore: SslStore,
-  keyPassword: String
+  sslKeyStore: SslStore
 ) {
   def toClientProps: Properties = {
     val props = new Properties()
@@ -23,7 +22,6 @@ case class KafkaClientSettings(
     props.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, sslKeyStore.password)
     props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, sslTrustStore.location)
     props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, sslTrustStore.password)
-    props.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, keyPassword)
     props
   }
 }
@@ -43,8 +41,7 @@ object KafkaConfig {
       sslKeyStore = SslStore(
         clientConfig.getString(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG),
         clientConfig.getString(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG)
-      ),
-      keyPassword = clientConfig.getString(SslConfigs.SSL_KEY_PASSWORD_CONFIG)
+      )
     )
   }
 }

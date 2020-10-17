@@ -12,17 +12,17 @@
         </encoder>
     </appender>
 
-<!--    <logger name="org.apache.kafka.clients.consumer.internals.Fetcher" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.clients.consumer.KafkaConsumer" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.clients.NetworkClient" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.common.network.Selector" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.clients.consumer.internals.AbstractCoordinator" level="WARN"/>-->
-<!--    <logger name="org.apache.kafka.clients.consumer.internals.ConsumerCoordinator" level="WARN"/>-->
-<!--    <logger name="org.apache.kafka.clients.FetchSessionHandler" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.clients.Metadata" level="INFO"/>-->
-<!--    <logger name="org.apache.kafka.common.network.SslTransportLayer" level="INFO"/>-->
+    <logger name="org.apache.kafka.clients.consumer.internals.Fetcher" level="INFO"/>
+    <logger name="org.apache.kafka.clients.consumer.KafkaConsumer" level="INFO"/>
+    <logger name="org.apache.kafka.clients.NetworkClient" level="INFO"/>
+    <logger name="org.apache.kafka.common.network.Selector" level="INFO"/>
+    <logger name="org.apache.kafka.clients.consumer.internals.AbstractCoordinator" level="WARN"/>
+    <logger name="org.apache.kafka.clients.consumer.internals.ConsumerCoordinator" level="WARN"/>
+    <logger name="org.apache.kafka.clients.FetchSessionHandler" level="INFO"/>
+    <logger name="org.apache.kafka.clients.Metadata" level="INFO"/>
+    <logger name="org.apache.kafka.common.network.SslTransportLayer" level="INFO"/>
 
-    <root level="OFF">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
