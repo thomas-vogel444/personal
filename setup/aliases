@@ -7,6 +7,7 @@ alias gb='git branch'
 alias gr='git reset'
 alias gf='git fetch'
 alias gp='git push'
+alias ga='git add'
 
 alias k='kubectl'
 
