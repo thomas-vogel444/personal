@@ -27,6 +27,8 @@ brew cask install authy
 brew install sbt
 brew install tfenv
 brew cask install chromedriver
+brew cask install dropbox
+
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh

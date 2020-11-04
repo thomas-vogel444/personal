@@ -1,0 +1,17 @@
+WORKDIR=/Users/thomasvogel/ovo-repositories/sg-terraform/
+POLAR_WORKDIR=/Users/thomasvogel/ovo-repositories/polar-integration-service/environment/datadog-integration
+#TERRAFORM_BIN=/Users/thomasvogel/ovo-repositories/sg-terraform/bin/terraform
+
+MODULES_DIR=$POLAR_WORKDIR
+
+echo $(find $MODULES_DIR -name '*.tf' -exec dirname {} \; | uniq)
+
+for dir in $(find $MODULES_DIR -name '*.tf' -exec dirname {} \; | uniq)
+do
+  cd $dir || exit
+  echo $dir
+  terraform init -backend-config "bucket=polar-integration-uat-terraform-state"
+  terraform 0.13upgrade -yes
+done
+
+cd $WORKDIR || exit
