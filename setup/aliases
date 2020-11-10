@@ -1,3 +1,5 @@
+alias ca='code /Users/thomasvogel/personal/setup/aliases'
+
 alias g='git'
 alias gs='git status'
 alias gco='git checkout'
@@ -10,10 +12,11 @@ alias gp='git push'
 alias ga='git add'
 alias gl='git log'
 alias grm='git rebase -i master'
+alias gpu='git pull'
 
 alias k='kubectl'
 
-alias d='docker'
+alias doc='docker'
 
 alias tf='terraform'
 
