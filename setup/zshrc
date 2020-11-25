@@ -1,4 +1,6 @@
 source ~/personal/setup/aliases
 
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
 #source ~/google-cloud-sdk/completion.zsh.inc
 #source ~/google-cloud-sdk/path.zsh.inc

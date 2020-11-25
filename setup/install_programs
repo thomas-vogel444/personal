@@ -1,10 +1,10 @@
 # Set up Prezto (assuming zsh is the default)
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
+#setopt EXTENDED_GLOB
+#for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+#  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+#done
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -21,15 +21,16 @@ brew install minikube
 brew install docker-compose
 brew cask install evernote
 brew cask install slack
-brew cask install alfred
+brew cask install alfred3
 brew cask install iterm2
 brew cask install authy
 brew install sbt
 brew install tfenv
 brew cask install chromedriver
 brew cask install dropbox
-
+brew install autojump
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
 bash install.sh --disable-prompts
+rm -f install.sh
