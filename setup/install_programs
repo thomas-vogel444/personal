@@ -29,6 +29,8 @@ brew install tfenv
 brew cask install chromedriver
 brew cask install dropbox
 brew install autojump
+brew cask install visual-studio-code
+brew cask install skype
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
