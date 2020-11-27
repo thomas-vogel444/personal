@@ -1,4 +1,4 @@
-alias ca='code /Users/thomasvogel/personal/setup/aliases'
+alias cs='code /Users/thomasvogel/personal/setup/'
 
 alias g='git'
 alias gs='git status'
