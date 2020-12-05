@@ -22,5 +22,7 @@ alias tf='terraform'
 
 alias ii='idea .'
 
+alias c='circleci'
+
 alias new_scala='sbt new scala/scala-seed.g8'
 alias new_http4s='sbt -sbt-version 1.3.12 new http4s/http4s.g8 -b 0.21'%

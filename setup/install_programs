@@ -32,6 +32,7 @@ brew install autojump
 brew cask install visual-studio-code
 brew cask install skype
 brew install circleci
+brew install tree
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
