@@ -1,4 +1,4 @@
-alias cs='code /Users/thomasvogel/personal/setup/'
+alias cs='cd /Users/thomasvogel/personal; code /Users/thomasvogel/personal/setup/'
 
 alias g='git'
 alias gs='git status'
