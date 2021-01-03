@@ -1,5 +1,7 @@
 package canonical.kafka
 
+import canonical.kafka.serialisation.PersonRecord
+import canonical.kafka.serialisation.Utils._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.kafka.common.serialization.StringSerializer
 
@@ -9,14 +11,19 @@ object ProducerMain extends App {
 
   val topic = "kafka-test-topic"
 
-  val config = Map[String, Object](
-    "bootstrap.servers" -> "localhost:9092"
-  )
+  val producerConfig = Map[String, Object]("bootstrap.servers" -> "localhost:9092")
+  val serializerConfig = Map[String, Object]("schema.registry.url" -> "http://localhost:8081")
 
-  val kafkaProducer: KafkaProducer[String, String] = new KafkaProducer[String, String](config.asJava, new StringSerializer, new StringSerializer)
+  val personSerialiser = reflectionAvroSerializer4S[PersonRecord](serializerConfig.asJava, false)
 
-  kafkaProducer.send(new ProducerRecord(topic, "key1", "value1"))
-  kafkaProducer.send(new ProducerRecord(topic, "key2", "value2"))
-  kafkaProducer.send(new ProducerRecord(topic, "key3", "value3"))
+  val kafkaProducer: KafkaProducer[String, PersonRecord] =
+    new KafkaProducer[String, PersonRecord](producerConfig.asJava, new StringSerializer, personSerialiser)
+
+  kafkaProducer.send(new ProducerRecord(topic, "key1", PersonRecord("Thomas", 33)))
+  kafkaProducer.send(new ProducerRecord(topic, "key2", PersonRecord("John", 68)))
+  kafkaProducer.send(new ProducerRecord(topic, "key3", PersonRecord("Annie", 70)))
   kafkaProducer.flush()
+
+  personSerialiser.close()
+  kafkaProducer.close()
 }
