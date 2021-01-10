@@ -2,13 +2,14 @@ import sbt._
 
 object KafkaDependencies {
   val avro4sVersion = "1.9.0"
-  val confluentVersion = "5.5.1"
+  val confluentVersion = "5.5.3"
 
   val all = Seq(
     "org.apache.kafka" % "kafka-clients" % (confluentVersion + "-ccs"),
     "io.confluent" % "kafka-schema-registry-client" % confluentVersion,
     "io.confluent" % "kafka-avro-serializer" % confluentVersion,
-    "org.apache.kafka" %% "kafka-streams-scala" % "2.0.0",
+    "io.confluent" % "kafka-streams-avro-serde" % confluentVersion,
+    "org.apache.kafka" %% "kafka-streams-scala" % "2.5.1",
     "com.sksamuel.avro4s" %% "avro4s-core" % "3.1.1"
   )
 }

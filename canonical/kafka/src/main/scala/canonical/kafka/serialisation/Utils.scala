@@ -3,40 +3,38 @@ package canonical.kafka.serialisation
 import com.sksamuel.avro4s.RecordFormat
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.IndexedRecord
-import org.apache.kafka.common.serialization.{Deserializer, Serializer}
+import org.apache.kafka.common.serialization.{Deserializer, Serde, Serializer, Serdes => JSerdes}
 
 object Utils {
 
-  def reflectionAvroSerializer4S[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Serializer[T] = new Serializer[T] {
+  def avroSerializerFor[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Serializer[T] = new Serializer[T] {
     val inner = new KafkaAvroSerializer()
     inner.configure(configs, isKey)
 
-    override def configure(configs: java.util.Map[String, _], isKey: Boolean): Unit =
-      inner.configure(configs, isKey)
+    override def serialize(topic: String, data: T): Array[Byte] =
+      inner.serialize(topic, implicitly[RecordFormat[T]].to(data))
 
-    override def serialize(topic: String, maybeData: T): Array[Byte] = Option(maybeData)
-      .map(data => inner.serialize(topic, implicitly[RecordFormat[T]].to(data)))
-      .getOrElse(Array.emptyByteArray)
-
+    override def configure(configs: java.util.Map[String, _], isKey: Boolean): Unit = ()
     override def close(): Unit = inner.close()
   }
 
-  def reflectionAvroDeserializer4S[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Deserializer[T] = new Deserializer[T] {
+  def avroDeserializerFor[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Deserializer[T] = new Deserializer[T] {
     val inner = new KafkaAvroDeserializer()
     inner.configure(configs, isKey)
 
-    override def configure(configs: java.util.Map[String, _], isKey: Boolean): Unit =
-      inner.configure(configs, isKey)
+    override def deserialize(topic: String, data: Array[Byte]): T =
+      implicitly[RecordFormat[T]]
+        .from(inner.deserialize(topic, data).asInstanceOf[IndexedRecord])
 
-    override def deserialize(topic: String, maybeData: Array[Byte]): T = Option(maybeData)
-      .filter(_.nonEmpty)
-      .map { data =>
-        implicitly[RecordFormat[T]]
-          .from(inner.deserialize(topic, data).asInstanceOf[IndexedRecord])
-      }
-      .getOrElse(null.asInstanceOf[T])
-
+    override def configure(configs: java.util.Map[String, _], isKey: Boolean): Unit = ()
     override def close(): Unit = inner.close()
+  }
+
+  def serde[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Serde[T] = {
+    JSerdes.serdeFrom(
+      avroSerializerFor[T](configs, isKey),
+      avroDeserializerFor[T](configs, isKey)
+    )
   }
 
 }

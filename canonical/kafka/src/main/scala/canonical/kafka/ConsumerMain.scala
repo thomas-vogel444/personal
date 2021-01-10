@@ -10,9 +10,7 @@ import org.apache.kafka.common.serialization.StringDeserializer
 
 import scala.collection.JavaConverters._
 
-object ConsumerMain extends App {
-
-  val topic = "kafka-test-topic"
+object ConsumerMain extends App with Config {
 
   val consumerConfig = Map[String, AnyRef](
     "bootstrap.servers" -> "localhost:9092",
@@ -22,12 +20,12 @@ object ConsumerMain extends App {
   )
 
   val deserializerConfig = Map[String, Object]("schema.registry.url" -> "http://localhost:8081")
-  val personDeserializer = reflectionAvroDeserializer4S[PersonRecord](deserializerConfig.asJava, false)
+  val personDeserializer = avroDeserializerFor[PersonRecord](deserializerConfig.asJava, false)
 
   val kafkaConsumer: KafkaConsumer[String, PersonRecord] =
     new KafkaConsumer[String, PersonRecord](consumerConfig.asJava, new StringDeserializer, personDeserializer)
 
-  kafkaConsumer.subscribe(Collections.singleton(topic))
+  kafkaConsumer.subscribe(Collections.singleton(inputTopic))
 
   kafkaConsumer
     .poll(Duration.ofSeconds(1)).iterator.asScala.toList
