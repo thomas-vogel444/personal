@@ -19,9 +19,9 @@ object ProducerMain extends App {
   val kafkaProducer: KafkaProducer[String, PersonRecord] =
     new KafkaProducer[String, PersonRecord](producerConfig.asJava, new StringSerializer, personSerialiser)
 
-  kafkaProducer.send(new ProducerRecord(topic, "key1", PersonRecord("Thomas", 33)))
-  kafkaProducer.send(new ProducerRecord(topic, "key2", PersonRecord("John", 68)))
-  kafkaProducer.send(new ProducerRecord(topic, "key3", PersonRecord("Annie", 70)))
+  kafkaProducer.send(new ProducerRecord(topic, "key1", PersonRecord("Thomas", 33, "1089 Greenford Road")))
+  kafkaProducer.send(new ProducerRecord(topic, "key2", PersonRecord("John", 68, "1089 Greenford Road", Some("123"))))
+  kafkaProducer.send(new ProducerRecord(topic, "key3", PersonRecord("Annie", 70, "somewhere else", Some("456"))))
   kafkaProducer.flush()
 
   personSerialiser.close()
