@@ -1,17 +1,14 @@
 ThisBuild / scalaVersion     := "2.12.12"
-ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "com.example"
-ThisBuild / organizationName := "example"
 
-resolvers ++= Seq(
-  "Confluent" at "https://packages.confluent.io/maven/",
-  Resolver.bintrayRepo("cakesolutions", "maven")
-)
+lazy val `root` =
+  (project in file("."))
+    .aggregate(kafka)
 
-lazy val root = (project in file("."))
+lazy val kafka = (project in file("kafka"))
   .settings(
-    name := "canonical",
-    libraryDependencies ++= Dependencies.all
+    resolvers ++= Seq("Confluent" at "https://packages.confluent.io/maven/"),
+    libraryDependencies ++=
+      KafkaDependencies.all ++
+        OtherDependencies.all ++
+        TestDependencies.all
   )
-
-// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
