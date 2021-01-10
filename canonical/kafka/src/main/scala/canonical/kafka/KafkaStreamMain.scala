@@ -5,9 +5,9 @@ import java.util.concurrent.TimeUnit
 
 import canonical.kafka.serialisation.PersonRecord.personFormat
 import canonical.kafka.serialisation.{PersonRecord, Utils}
-import org.apache.kafka.common.serialization.{Serde, Serdes}
+import org.apache.kafka.common.serialization.Serde
 import org.apache.kafka.streams.kstream.{Consumed, Produced}
-import org.apache.kafka.streams.scala.StreamsBuilder
+import org.apache.kafka.streams.scala.{Serdes, StreamsBuilder}
 import org.apache.kafka.streams.scala.kstream.KStream
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 
@@ -29,10 +29,24 @@ object KafkaStreamMain extends App with Config {
   val personSerde: Serde[PersonRecord] = Utils.serde[PersonRecord](serdeProps.asJava, false)
 
   val builder = new StreamsBuilder
-  val stream: KStream[String, PersonRecord] =
+
+  // ****************************************************
+  // Stream 1
+  // ****************************************************
+//  val stream1: KStream[String, PersonRecord] =
+//    builder.stream(inputTopic)(Consumed.`with`(Serdes.String, personSerde))
+//
+//  stream1.to(outputTopic)(Produced.`with`(Serdes.String, personSerde))
+
+  // ****************************************************
+  // Stream 2
+  // ****************************************************
+  val stream2: KStream[String, PersonRecord] =
     builder.stream(inputTopic)(Consumed.`with`(Serdes.String, personSerde))
 
-  stream.to(outputTopic)(Produced.`with`(Serdes.String, personSerde))
+  stream2
+    .mapValues(_.age)
+    .to(outputTopic)(Produced.`with`(Serdes.String, Serdes.Integer))
 
   val kafkaStream = new KafkaStreams(builder.build(), props)
 

@@ -1,6 +1,6 @@
 package canonical.kafka
 
-import canonical.kafka.serialisation.PersonRecord
+import canonical.kafka.serialisation.{Cat, Dog, Fox, PersonRecord}
 import canonical.kafka.serialisation.Utils._
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.kafka.common.serialization.StringSerializer
@@ -17,9 +17,9 @@ object ProducerMain extends App with Config {
   val kafkaProducer: KafkaProducer[String, PersonRecord] =
     new KafkaProducer[String, PersonRecord](producerConfig.asJava, new StringSerializer, personSerialiser)
 
-  kafkaProducer.send(new ProducerRecord(inputTopic, "key1", PersonRecord("Thomas", 33, "1089 Greenford Road")))
-  kafkaProducer.send(new ProducerRecord(inputTopic, "key2", PersonRecord("John", 68, "1089 Greenford Road", Some("123"))))
-  kafkaProducer.send(new ProducerRecord(inputTopic, "key3", PersonRecord("Annie", 70, "somewhere else", Some("456"))))
+  kafkaProducer.send(new ProducerRecord(inputTopic, "key1", PersonRecord("Thomas", 33, "1089 Greenford Road", None, Dog)))
+  kafkaProducer.send(new ProducerRecord(inputTopic, "key2", PersonRecord("John", 68, "1089 Greenford Road", Some("123"), Cat)))
+  kafkaProducer.send(new ProducerRecord(inputTopic, "key3", PersonRecord("Annie", 70, "somewhere else", Some("456"), Fox)))
   kafkaProducer.flush()
 
   personSerialiser.close()
