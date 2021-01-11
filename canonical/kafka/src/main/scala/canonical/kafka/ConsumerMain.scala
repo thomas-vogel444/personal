@@ -3,8 +3,11 @@ package canonical.kafka
 import java.time.Duration
 import java.util.Collections
 
-import canonical.kafka.serialisation.PersonRecord
-import canonical.kafka.serialisation.Utils._
+import canonical.kafka.serialisation.{PersonRecord, TopicRecord}
+import canonical.kafka.serialisation.AvroSerde._
+import canonical.kafka.serialisation.MultiSchemaSerde.avroDeserializer
+import canonical.kafka.serialisation.Records.personFormat
+import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.serialization.StringDeserializer
 
@@ -19,11 +22,14 @@ object ConsumerMain extends App with Config {
     "enable.auto.commit" -> "true"
   )
 
-  val deserializerConfig = Map[String, Object]("schema.registry.url" -> "http://localhost:8081")
-  val personDeserializer = avroDeserializerFor[PersonRecord](deserializerConfig.asJava, false)
+  val deserializerConfig = Map[String, Object](
+    "schema.registry.url" -> "http://localhost:8081",
+    "value.subject.name.strategy" -> classOf[TopicRecordNameStrategy]
+  )
+  val multiDeserializer = avroDeserializer(deserializerConfig.asJava, false)
 
-  val kafkaConsumer: KafkaConsumer[String, PersonRecord] =
-    new KafkaConsumer[String, PersonRecord](consumerConfig.asJava, new StringDeserializer, personDeserializer)
+  val kafkaConsumer: KafkaConsumer[String, TopicRecord] =
+    new KafkaConsumer[String, TopicRecord](consumerConfig.asJava, new StringDeserializer, multiDeserializer)
 
   kafkaConsumer.subscribe(Collections.singleton(inputTopic))
 
@@ -34,6 +40,6 @@ object ConsumerMain extends App with Config {
     }
 
   kafkaConsumer.commitSync()
-  personDeserializer.close()
+  multiDeserializer.close()
   kafkaConsumer.close()
 }

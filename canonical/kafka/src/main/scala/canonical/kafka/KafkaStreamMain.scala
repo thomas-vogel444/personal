@@ -3,12 +3,12 @@ package canonical.kafka
 import java.util.Properties
 import java.util.concurrent.TimeUnit
 
-import canonical.kafka.serialisation.PersonRecord.personFormat
-import canonical.kafka.serialisation.{PersonRecord, Utils}
+import canonical.kafka.serialisation.Records.personFormat
+import canonical.kafka.serialisation.{AvroSerde, PersonRecord}
 import org.apache.kafka.common.serialization.Serde
 import org.apache.kafka.streams.kstream.{Consumed, Produced}
-import org.apache.kafka.streams.scala.{Serdes, StreamsBuilder}
 import org.apache.kafka.streams.scala.kstream.KStream
+import org.apache.kafka.streams.scala.{Serdes, StreamsBuilder}
 import org.apache.kafka.streams.{KafkaStreams, StreamsConfig}
 
 import scala.collection.JavaConverters._
@@ -26,7 +26,7 @@ object KafkaStreamMain extends App with Config {
     "schema.registry.url" -> "http://localhost:8081"
   )
 
-  val personSerde: Serde[PersonRecord] = Utils.serde[PersonRecord](serdeProps.asJava, false)
+  val personSerde: Serde[PersonRecord] = AvroSerde.serde[PersonRecord](serdeProps.asJava, false)
 
   val builder = new StreamsBuilder
 

@@ -5,7 +5,7 @@ import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerialize
 import org.apache.avro.generic.IndexedRecord
 import org.apache.kafka.common.serialization.{Deserializer, Serde, Serializer, Serdes => JSerdes}
 
-object Utils {
+object AvroSerde {
 
   def avroSerializerFor[T: RecordFormat](configs: java.util.Map[String, _], isKey: Boolean): Serializer[T] = new Serializer[T] {
     val inner = new KafkaAvroSerializer()
