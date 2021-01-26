@@ -9,33 +9,33 @@ git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$H
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-brew cask install spectacle
-brew cask install intellij-idea-ce
+brew install --cask spectacle
+brew install --cask intellij-idea-ce
 
 brew tap adoptopenjdk/openjdk
-brew cask install adoptopenjdk8
-brew cask install 1password
-brew cask install brave-browser
-brew cask install docker
+brew install --cask adoptopenjdk8
+brew install --cask 1password
+brew install --cask brave-browser
+brew install --cask docker
 brew install minikube
 brew install docker-compose
-brew cask install evernote
-brew cask install slack
-brew cask install alfred3
-brew cask install iterm2
-brew cask install authy
+brew install --cask evernote
+brew install --cask slack
+brew install --cask alfred3
+brew install --cask iterm2
+brew install --cask authy
 brew install sbt
 brew install tfenv
-brew cask install chromedriver
-brew cask install dropbox
+brew install --cask chromedriver
+brew install --cask dropbox
 brew install autojump
-brew cask install visual-studio-code
-brew cask install skype
+brew install --cask visual-studio-code
+brew install --cask skype
 brew install circleci
 brew install tree
 brew install awscli
 brew install jq
-brew cask install postman
+brew install --cask postman
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
