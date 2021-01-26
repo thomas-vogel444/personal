@@ -35,6 +35,7 @@ brew install circleci
 brew install tree
 brew install awscli
 brew install jq
+brew cask install postman
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
