@@ -36,6 +36,7 @@ brew install tree
 brew install awscli
 brew install jq
 brew install --cask postman
+brew install giter8
 
 # Installing gcloud 
 curl https://sdk.cloud.google.com > install.sh
