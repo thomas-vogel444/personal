@@ -1,6 +1,6 @@
 package canonical.kafka.serialisation
 
-import com.sksamuel.avro4s.{AvroSchema, RecordFormat, SchemaFor}
+import com.sksamuel.avro4s.{AvroSchema, RecordFormat}
 import org.apache.avro.Schema
 
 sealed trait TopicRecord
@@ -23,6 +23,6 @@ object Records {
   implicit lazy val personFormat: RecordFormat[PersonRecord] = RecordFormat[PersonRecord]
   implicit lazy val employeeFormat: RecordFormat[EmployeeRecord] = RecordFormat[EmployeeRecord]
 
-  implicit val personSchemaFor: Schema = AvroSchema[PersonRecord]
-  implicit val employeeSchemaFor: Schema = AvroSchema[EmployeeRecord]
+  implicit val personSchema: Schema = AvroSchema[PersonRecord]
+  implicit val employeeSchema: Schema = AvroSchema[EmployeeRecord]
 }

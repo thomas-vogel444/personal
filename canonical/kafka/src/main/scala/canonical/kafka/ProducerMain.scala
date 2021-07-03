@@ -1,7 +1,6 @@
 package canonical.kafka
 
-import canonical.kafka.serialisation.{Cat, Dog, EmployeeRecord, Fox, MultiSchemaSerde, PersonRecord, TopicRecord}
-import canonical.kafka.serialisation.AvroSerde._
+import canonical.kafka.serialisation._
 import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.kafka.common.serialization.{Serializer, StringSerializer}

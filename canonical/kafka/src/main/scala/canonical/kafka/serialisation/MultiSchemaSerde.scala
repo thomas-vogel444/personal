@@ -1,7 +1,6 @@
 package canonical.kafka.serialisation
 
-import canonical.kafka.serialisation.Records.{employeeFormat, personFormat}
-import com.sksamuel.avro4s.{Record, RecordFormat}
+import com.sksamuel.avro4s.Record
 import io.confluent.kafka.serializers.{KafkaAvroDeserializer, KafkaAvroSerializer}
 import org.apache.avro.generic.IndexedRecord
 import org.apache.kafka.common.serialization.{Deserializer, Serializer}
@@ -32,13 +31,10 @@ object MultiSchemaSerde {
     override def deserialize(topic: String, data: Array[Byte]): TopicRecord = {
       val record = inner.deserialize(topic, data).asInstanceOf[IndexedRecord]
 
-      println(record.getSchema.getFullName)
-      println(Records.personSchemaFor)
-      println(Records.employeeSchemaFor)
 
       record.getSchema.getFullName match {
-        case s if s == Records.personSchemaFor.getFullName => Records.personFormat.from(record)
-        case s if s == Records.employeeSchemaFor.getFullName => Records.employeeFormat.from(record)
+        case s if s == Records.personSchema.getFullName => Records.personFormat.from(record)
+        case s if s == Records.employeeSchema.getFullName => Records.employeeFormat.from(record)
       }
     }
 

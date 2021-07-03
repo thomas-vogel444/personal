@@ -26,4 +26,5 @@ lazy val root = (project in file("."))
 ```
 
 Of note:
-- 
+- Tests are aggregated. Calling `sbt test` will run all the tests in the projects aggregated with the root project.
+- The test code is not shared by default. You need to add `.dependsOn(moduleA % "compile->compile;test->test")` to share test code.
